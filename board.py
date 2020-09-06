@@ -34,11 +34,12 @@ class Board:
         self.board = self.make_board()
         self.snake.move()
         self.snake.wall_detect()
-        self.board[self.apple.apple_coords[0]][self.apple.apple_coords[1]] = "A"
+        self.board[self.apple.apple_coords[0]][self.apple.apple_coords[1]] = "@"
         for el in self.snake.body:
             self.board[el[0]][el[1]] = "O"
-        if self.snake.apple_collision(self.apple.apple_coords):
+        if self.snake.body[0] == self.apple.apple_coords:
             self.score += 1
+            self.snake.grow = True
             self.apple.spawn_apple(self.snake)
 
             

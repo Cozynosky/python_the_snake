@@ -32,12 +32,12 @@ class Game:
     def update_screen(self):
         print("-------------PRESS 'esc' TO QUIT-------------")
         self.board.update_board()
+        self.game_on = not self.board.snake.self_eat_detect()
         self.board.show_board()
         print(f"SCORE: {self.board.score}")
         keyboard.on_press(self.read_keyboard)
-        time.sleep(0.5)
+        time.sleep(self.settings.game_speed)
         os.system('clear')
-
 
 if __name__ == "__main__":
     snk_game = Game()
