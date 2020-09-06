@@ -33,6 +33,7 @@ class Game:
         print("-------------PRESS 'esc' TO QUIT-------------")
         self.board.update_board()
         self.board.show_board()
+        print(f"SCORE: {self.board.score}")
         keyboard.on_press(self.read_keyboard)
         time.sleep(0.5)
         os.system('clear')
