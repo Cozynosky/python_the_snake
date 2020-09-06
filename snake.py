@@ -56,4 +56,8 @@ class Snake:
 
     def self_detect(self):
         pass
+
+    def apple_collision(self,apple):
+        if apple in self.body:
+            return True
     
