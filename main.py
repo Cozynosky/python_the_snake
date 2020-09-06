@@ -7,20 +7,31 @@ Assumptions:
 """
 import time,os,keyboard
 from board import Board
+from settings import Settings
 
 class Game:
 
     def __init__(self):
         self.game_on = True
-        self.board = Board()
+        self.settings = Settings()
+        self.board = Board(self.settings)
     
     def read_keyboard(self,key):
         if key.name == "esc":
             self.game_on = False
+        if key.name == "s":
+            self.board.snake.go_down()
+        if key.name == "w":
+            self.board.snake.go_up()
+        if key.name == "a":
+            self.board.snake.go_left()
+        if key.name == "d":
+            self.board.snake.go_right()
         keyboard.unhook_all()
             
     def update_screen(self):
         print("-------------PRESS 'esc' TO QUIT-------------")
+        self.board.update_board()
         self.board.show_board()
         keyboard.on_press(self.read_keyboard)
         time.sleep(0.5)
