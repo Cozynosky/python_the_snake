@@ -1,6 +1,7 @@
 """
 board class should make board and store objects on it
 """
+import time
 from snake import Snake
 from apple import Apple
 
@@ -13,6 +14,7 @@ class Board:
         self.snake = Snake(settings)
         self.apple = Apple(settings,self.snake)
         self.score = 0
+        self.playtime_started = time.time()
     
     def make_board(self):
         board = [[" " for y in range(self.width)] for x in range(self.height)]
@@ -29,9 +31,12 @@ class Board:
         return board
 
     def show_board(self):
+        time_played = int(time.time() - self.playtime_started)
+        minutes = time_played // 60
+        seconds = time_played - (minutes *60)
         print(f"""
 +-------------------------------------------+
-|SCORE:{self.score}                                    |""")
+         SCORE:{self.score}   TIME PLAYED: {minutes}:{seconds}""")
         for i in range(self.height):
             for j in range(self.width):
                 print(self.board[i][j], end="")
