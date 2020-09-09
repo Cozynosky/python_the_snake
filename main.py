@@ -30,12 +30,10 @@ class Game:
         keyboard.unhook_all()
             
     def update_screen(self):
-        print("-------------PRESS 'esc' TO QUIT-------------")
         self.board.update_board()
-        self.game_on = not self.board.snake.self_eat_detect()
         self.board.show_board()
-        print(f"SCORE: {self.board.score}")
         keyboard.on_press(self.read_keyboard)
+        self.game_on = not self.board.snake.self_eat_detect()
         time.sleep(self.settings.game_speed)
         os.system('clear')
 
