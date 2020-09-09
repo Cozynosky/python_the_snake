@@ -15,6 +15,7 @@ class Board:
         self.apple = Apple(settings,self.snake)
         self.score = 0
         self.playtime_started = time.time()
+        self.playtime_ended = 0
         self.settings = settings
     
     def make_board(self):
@@ -32,11 +33,10 @@ class Board:
         return board
 
     def show_board(self):
-        time_played = int(time.time() - self.playtime_started)
-        minutes = time_played // 60
-        seconds = time_played - (minutes *60)
-        print(f"""
-+-------------------------------------------+
+        self.playtime_ended = int(time.time() - self.playtime_started)
+        minutes = self.playtime_ended // 60
+        seconds = self.playtime_ended - (minutes *60)
+        print(f"""+-------------------------------------------+
          SCORE:{self.score}   TIME PLAYED: {minutes}:{seconds}""")
         for i in range(self.height):
             for j in range(self.width):
