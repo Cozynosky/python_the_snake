@@ -41,22 +41,22 @@ class Game:
         if not self.game_on:
             self.snake_eaten()
         time.sleep(self.settings.game_speed)
-        os.system('clear')
+        os.system(self.settings.clear_console)
     
     def snake_eaten(self):
         input("GAME OVER! YOU'VE ATE YOURSELF. \nPRESS 'ENTER' TO SEE HIGHSCORES")
-        os.system('clear')
+        os.system(self.settings.clear_console)
         self.show_high_scores()
         record,index = self.check_scores()
         if record:
             choice = input(f"You have new RECORD!! {self.board.score}!! Would you like to save it? [y/n]")
             if choice == "y":
-                os.system('clear')
+                os.system(self.settings.clear_console)
                 name = input("Write your name please: ")
                 mins = self.board.playtime_ended // 60
                 secs = self.board.playtime_ended - (mins * 60)
                 self.save_scores(name,self.board.score,mins,secs,index)
-                os.system('clear')
+                os.system(self.settings.clear_console)
                 self.show_high_scores()
                 input("PRESS 'ENTER' TO CONTINUE")
 
