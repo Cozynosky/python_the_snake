@@ -15,6 +15,7 @@ class Board:
         self.apple = Apple(settings,self.snake)
         self.score = 0
         self.playtime_started = time.time()
+        self.settings = settings
     
     def make_board(self):
         board = [[" " for y in range(self.width)] for x in range(self.height)]
@@ -54,6 +55,7 @@ class Board:
         self.board[self.snake.body[0][0]][self.snake.body[0][1]] = "O"
         if self.snake.body[0] == self.apple.apple_coords:
             self.score += 1
+            self.settings.game_speed *= 0.97 
             self.snake.grow = True
             self.apple.spawn_apple(self.snake)
         
