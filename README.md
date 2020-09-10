@@ -11,6 +11,7 @@ It's my first try of making a game in python on my own. The concept is to make a
 * Apples which can be eaten by snake and make him longer
 * Local stored highscores
 ## Screenshoots
+![ss1](/screenshots/ss_2.png) ![ss1](/screenshots/ss_4.png) ![ss1](/screenshots/ss_3.png) ![ss1](/screenshots/ss_5.png)
 ## Technologies & Setup
 * Tested on Linux Fedora 32, but also could work on Windows
 * Python 3.8.5
