@@ -9,6 +9,7 @@ It's my first try of making a game in python on my own. The concept is to make a
   * D - turn right
 * Snake moving to the other side of the board when hit the wall
 * Apples which can be eaten by snake and make him longer
+* Game speed up with each apple eaten
 * Local stored highscores
 ## Screenshoots
 ![ss1](/screenshots/ss_2.png) ![ss1](/screenshots/ss_4.png) ![ss1](/screenshots/ss_3.png) ![ss1](/screenshots/ss_5.png)
