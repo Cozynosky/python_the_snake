@@ -5,7 +5,8 @@ Assumptions:
 - snake can eat apples and save it as a score
 - snake grow when eat apple
 """
-import time,os,keyboard,pickle
+import time,os,pickle
+from pynput import keyboard
 from board import Board
 from settings import Settings
 
@@ -19,24 +20,42 @@ class Game:
             self.high_scores = self.load_scores()
         except:
             self.high_scores = [(0,0,0,0) for x in range(10)]
-    
-    def read_keyboard(self,key):
-        if key.name == "esc":
-            self.game_on = False
-        if key.name == "s":
-            self.board.snake.go_down()
-        if key.name == "w":
-            self.board.snake.go_up()
-        if key.name == "a":
-            self.board.snake.go_left()
-        if key.name == "d":
-            self.board.snake.go_right()
-        keyboard.unhook_all()
+
+    def run(self):
+        '''Runs infinite game loop.
+        '''
+        listener = keyboard.Listener(on_press=self.keyboard_event_reader())
+        listener.start()
+        while(self.game_on):
+            self.update_screen()
+
+    def keyboard_event_reader(self):
+        '''
+        Returns function which reads given key and updates
+        snake state based on its value.
+        '''
+        def _result_func(key):
+            res = True
+            try:
+                if key.char == "s":
+                    self.board.snake.go_down()
+                elif key.char == "w":
+                    self.board.snake.go_up()
+                elif key.char == "a":
+                    self.board.snake.go_left()
+                elif key.char == "d":
+                    self.board.snake.go_right()
+            except AttributeError:
+                if key == keyboard.Key.esc:
+                    self.game_on = False
+                    res = False
+            return res
+
+        return _result_func
             
     def update_screen(self):
         self.board.update_board()
         self.board.show_board()
-        keyboard.on_press(self.read_keyboard)
         self.game_on = not self.board.snake.self_eat_detect()
         if not self.game_on:
             self.snake_eaten()
@@ -79,8 +98,7 @@ class Game:
         for i in range(len(self.high_scores)):
             print(f"{self.high_scores[i][0]}      {self.high_scores[i][1]}        {self.high_scores[i][2]}:{self.high_scores[i][3]}")
 
+
 if __name__ == "__main__":
     snk_game = Game()
-    while(snk_game.game_on):
-        snk_game.update_screen()
-    
+    snk_game.run()
