@@ -5,13 +5,13 @@ Assumptions:
 - snake can eat apples and save it as a score
 - snake grow when eat apple
 """
-import time,os,pickle
+import time, os, pickle
 from pynput import keyboard
 from board import Board
 from settings import Settings
 
-class Game:
 
+class Game:
     def __init__(self):
         self.game_on = True
         self.settings = Settings()
@@ -19,21 +19,21 @@ class Game:
         try:
             self.high_scores = self.load_scores()
         except:
-            self.high_scores = [(0,0,0,0) for x in range(10)]
+            self.high_scores = [(0, 0, 0, 0) for x in range(10)]
 
     def run(self):
-        '''Runs infinite game loop.
-        '''
+        """Runs infinite game loop."""
         listener = keyboard.Listener(on_press=self.keyboard_event_reader())
         listener.start()
-        while(self.game_on):
+        while self.game_on:
             self.update_screen()
 
     def keyboard_event_reader(self):
-        '''
+        """
         Returns function which reads given key and updates
         snake state based on its value.
-        '''
+        """
+
         def _result_func(key):
             res = True
             try:
@@ -52,7 +52,7 @@ class Game:
             return res
 
         return _result_func
-            
+
     def update_screen(self):
         self.board.update_board()
         self.board.show_board()
@@ -61,42 +61,46 @@ class Game:
             self.snake_eaten()
         time.sleep(self.settings.game_speed)
         os.system(self.settings.clear_console)
-    
+
     def snake_eaten(self):
         input("GAME OVER! YOU'VE ATE YOURSELF. \nPRESS 'ENTER' TO SEE HIGHSCORES")
         os.system(self.settings.clear_console)
         self.show_high_scores()
-        record,index = self.check_scores()
+        record, index = self.check_scores()
         if record:
-            choice = input(f"You have new RECORD!! {self.board.score}!! Would you like to save it? [y/n]")
+            choice = input(
+                f"You have new RECORD!! {self.board.score}!! Would you like to save it? [y/n]"
+            )
             if choice == "y":
                 os.system(self.settings.clear_console)
                 name = input("Write your name please: ")
                 mins = self.board.playtime_ended // 60
                 secs = self.board.playtime_ended - (mins * 60)
-                self.save_scores(name,self.board.score,mins,secs,index)
+                self.save_scores(name, self.board.score, mins, secs, index)
                 os.system(self.settings.clear_console)
                 self.show_high_scores()
                 input("PRESS 'ENTER' TO CONTINUE")
 
-    def save_scores(self,name,score,mins,secs,index):
-        self.high_scores.insert(index,(name,score,mins,secs))
+    def save_scores(self, name, score, mins, secs, index):
+        self.high_scores.insert(index, (name, score, mins, secs))
         del self.high_scores[-1]
-        pickle.dump(self.high_scores,open("highscores.pickle","wb"))
-    
+        pickle.dump(self.high_scores, open("highscores.pickle", "wb"))
+
     def load_scores(self):
-        return pickle.load(open("highscores.pickle","rb"))
-    
+        return pickle.load(open("highscores.pickle", "rb"))
+
     def check_scores(self):
         for i in range(len(self.high_scores)):
             if self.board.score > self.high_scores[i][1]:
-                return True,i
-        return False,0
-    
+                return True, i
+        return False, 0
+
     def show_high_scores(self):
         print("  NAME  |   SCORE   |  TIME")
         for i in range(len(self.high_scores)):
-            print(f"{self.high_scores[i][0]}      {self.high_scores[i][1]}        {self.high_scores[i][2]}:{self.high_scores[i][3]}")
+            print(
+                f"{self.high_scores[i][0]}      {self.high_scores[i][1]}        {self.high_scores[i][2]}:{self.high_scores[i][3]}"
+            )
 
 
 if __name__ == "__main__":
