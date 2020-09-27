@@ -17,7 +17,4 @@ It's my first try of making a game in python on my own. The concept is to make a
 * Tested on Linux Fedora 32, but also could work on Windows
 * Python 3.8.5
 ## Additional
-The game uses python keyboard library which needs root privilages on linux, so you have to run it with it
-```
-sudo python main.py
-```
+I found some problem with using Wayland display server (not on every setup) but X.Org works perfectly
